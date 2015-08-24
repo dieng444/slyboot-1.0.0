@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+{%block title%}Ajouter un article{%endblock%}
+{%block body%}
+    <div id="block-article-form">
+        <h3>Vous êtes sur le point d'ajouter un article</h3>
+        <form action="/Slyboot-1.1.0/article/add" method="post">
+            <label for="auteur"><span class="mandatory">*</span>Auteur</label>
+            <input name="auteur" type="text" id="auteur" class="form-child" value="{% if article!=null %}{{article.auteur}}{% elseif form.post("auteur") !=null %}{{form.post("auteur")}}{%else%}{{user.infos.username}}{%endif%}"/>
+            <div class="error" style="color:red;"><span>{{form.error("auteur") | raw }}</span></div>
+            <label for="titre"><span class="mandatory">*</span>Titre</label>
+            <input name="titre" type="text" id="titre" class="form-child" value="{% if article!=null %}{{article.titre}}{%else%}{{form.post("titre")}}{%endif%}"/>
+            <div class="error" style="color:red;"><span>{{form.error("titre") | raw }}</span></div>
+            <label for="chapo">Chapo</label>
+            <textarea name="chapo" id="chapo" class="form-child">{% if article!=null %}{{article.chapo}}{%else%}{{form.post("chapo")}}{%endif%}</textarea>
+            <div class="error" style="color:red;"><span>{{form.error("chapo") | raw }}</span></div>
+            <label for="contenu"><span class="mandatory">*</span>L'article</label>
+            <textarea name="contenu" id="contenu" class="form-child">{% if article!=null %}{{article.contenu}}{%else%}{{form.post("contenu")}}{%endif%}</textarea>
+            <div class="error" style="color:red;"><span>{{form.error("contenu") | raw }}</span></div>
+            <label for="statut">Statut</label>
+            <select name="statut">
+                <option value="Public" {% if article!=null and article.statut == "Public"%} selected {%endif%}>Public</option>
+                <option value="Privé" {% if article!=null and article.statut == "Privé" %} selected {%endif%}>Privé</option>
+            </select>
+            <div class="error" style="color:red;"><span>{{form.error("statut") | raw }}</span></div>
+            <input type="hidden" name="id" value="{% if article!=null %}{{article.id}}{%else%}{{form.post("id")}}{%endif%}"/>
+            <input type="submit" name="submit" id="sbmt-btn" value="Ajouter" class="btn btn-primary"/>
+            <a href="/Slyboot-1.1.0/" class="btn"><i class="icon-chevron-left"></i>Retour à l'accueil</a>
+        </form>
+    </div>
+{%endblock%}

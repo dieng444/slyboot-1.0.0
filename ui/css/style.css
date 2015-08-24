@@ -1,0 +1,41 @@
+/* @CHARSET "UTF-8";
+
+body
+{
+	//background-color:silver;
+	background-image:url('../images/got.jpg');
+}
+#b-body
+{
+	width:65.8%;
+	margin:auto;
+    margin-top:40px;
+	background-color:#fff;
+	padding:2em;
+}
+table
+{
+	border-collapse:collapse;
+	margin-bottom:20px;
+	margin-top:20px;
+}
+table tr,td,th
+{
+	border:1px solid black;
+}
+table td
+{
+	padding: 10px 5px 5px;
+    vertical-align: top;
+}
+ul
+{
+	display:flex;
+	padding-left: 0;
+}
+ul li
+{
+	list-style:none;
+	margin-right:10px;
+}
+ */

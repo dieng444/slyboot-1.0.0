@@ -1,0 +1,19 @@
+{
+    "name": "Slyboot - Mini Framework",
+    "license": "MIT",
+    "type": "project",
+    "description": "Slyboot standard distribution",
+    "keywords": ["framework","mini framework"],
+    "authors": [
+        {
+            "name": "Macky Dieng",
+            "email": "diengmacky444@gmail.com",
+            "homepage": "http://slyboot.carreetu.fr",
+            "role": "Developper"
+        }
+     ],
+    "require": {
+        "php": ">=5.3.3",
+         "twig/twig": "~1.0"
+     }
+}

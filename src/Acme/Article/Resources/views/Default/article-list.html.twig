@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+{% block title %} Liste des articles {% endblock %}
+
+{%block body%}
+    <div id="b-article-list">
+        <div id="article-container">
+            {%for article in articles%}
+                <a href="/Slyboot-1.1.0/article/detail/{{article.id}}" class="article" title="{{article.titre}}">
+                    <div class="b-image">
+                        {%if article.images | length > 0 %}
+                            <img src="/Slyboot-1.1.0/resources/public/uploads/images/articles/{{article.images.0.name}}" alt="{{article.images.0.titreImage}}"/>
+                        {%else%}
+                            <img src="/Slyboot-1.1.0/ui/images/no_picture_yet.jpg" alt="img-art"/>
+                        {%endif%}
+                    </div>
+                    <div class="b-resume">
+                        <h4>{{article.titre | raw }}</h4>
+                        <p>{{article.chapo | raw }}</p>
+                    </div>
+                </a>
+            {%endfor%}
+        </div>
+    </div>
+    {# {{ user.prenom }} #}
+{% endblock %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Personnages Préférés de Game of thrones{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="/Slyboot-1.1.0/ui/css/bootstrap/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
+            <link href="/Slyboot-1.1.0/ui/css/bootstrap/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css">
+            <link href="/Slyboot-1.1.0/ui/css/surcharge.css" media="all" rel="stylesheet" type="text/css">
+        {% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript" src="/Slyboot-1.1.0/ui/javascripts/jquery.js"></script>
+            <script type="text/javascript" src="/Slyboot-1.1.0/ui/javascripts/ckeditor/ckeditor.js"></script>
+            <script type="text/javascript" src="/Slyboot-1.1.0/ui/javascripts/ckeditor/adapters/jquery.js"></script>
+            <script type="text/javascript" src="/Slyboot-1.1.0/ui/javascripts/app.js"></script>
+        {% endblock %}
+    </head>
+    <body>
+        <header></header>
+        <div id="b-navigation">
+            <ul class="navbars">
+              <li><a href="/Slyboot-1.1.0/" class="link">Accueil</a></li>
+              <li><a href="/Slyboot-1.1.0/article/list" class="link">Afficher tous les articles</a></li>
+              {% if user.isConnected %}
+                {%if user.isGrantRole("ROLE_EDITOR") %}
+                    <li><a href="/Slyboot-1.1.0/article/add" class="link">Ajouter un article</a></li>
+                    <li><a href="/Slyboot-1.1.0/image/list" class="link">Gérer les images</a></li>
+                {%endif%}
+                <li style="color:#fff;margin-top:10px;">{{user.infos.firstname}} {{user.infos.lastname}}</li>
+                <li><a href="/Slyboot-1.1.0/logout" class="link">Déconnexion</a></li>   
+              {%else%}
+                 <li><a href="/Slyboot-1.1.0/login" class="link">Connexion</a></li>
+                 <li><a href="/Slyboot-1.1.0/signup" class="link">Inscription</a></li>
+              {%endif%}
+            </ul>
+        </div>
+        <h1 id="site-motif">Personnages Préférés de Game of thrones</h1>
+        {% block body %}
+        
+        {% endblock %}
+        <footer>
+            <p>
+               &#169; Elhadj Macky Dieng, Copy right &#169; 2015, M1 DNR2i - Université de Caen Basse-Normandie
+             </p>
+        </footer>
+    </body>
+</html>
