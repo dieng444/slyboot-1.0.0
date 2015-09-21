@@ -2,7 +2,7 @@
 
 Slyboot is a mini php framework that I developed,
 it allows developers to create strong and secure 
-web applications. The framework includes a route 
+web app. The framework includes a route 
 component allowing developers to specify themselves route names (path).
 
 The framework also includes a form handler, 
