@@ -6,34 +6,34 @@ namespace Slyboot\Request;
  * as an object
  * @author Macky Dieng
  * @license MIT - http://opensource.org/licenses/MIT
- * @copyright 2015 the author
+ * @copyright 2015 - the author
  */
 class HttpRequest
 {
-    private $_m = null,
-    $_g = null,
-    $_p = null,
-    $_r = null,
-    $_q = null,
-    $_pi = null,
-    $_s = null,
-    $_ru = null,
-    $_rel_uri = null;
+    private $m = null;
+    private $g = null;
+    private $p = null;
+    private $r = null;
+    private $q = null;
+    private $pi = null;
+    private $s = null;
+    private $ru = null;
+    private $reluri = null;
 
     /**
      * Class constructor, initialize all variables
      */
-    public function __construct () {
-
-        $this->_m = $_SERVER['REQUEST_METHOD'];
-        $this->_g = $_GET ;
-        $this->_p = $_POST;
-        $this->_r = $_REQUEST;
-        $this->_l = $_SERVER['HTTP_ACCEPT_LANGUAGE'] ;
-        $this->_q = $_SERVER['QUERY_STRING'] ;
-        $this->_s = $_SERVER['SCRIPT_NAME'];
-        $this->_ru = $_SERVER['REQUEST_URI'];
-        $this->rel_uri = str_replace(dirname($this->_s), '', $this->_ru);
+    public function __construct()
+    {
+        $this->m = $_SERVER['REQUEST_METHOD'];
+        $this->g = $_GET ;
+        $this->p = $_POST;
+        $this->r = $_REQUEST;
+        $this->l = $_SERVER['HTTP_ACCEPT_LANGUAGE'] ;
+        $this->q = $_SERVER['QUERY_STRING'] ;
+        $this->s = $_SERVER['SCRIPT_NAME'];
+        $this->ru = $_SERVER['REQUEST_URI'];
+        $this->reluri = str_replace(dirname($this->s), '', $this->ru);
     }
     /**
      * Returns the httpRequest Method
@@ -41,7 +41,7 @@ class HttpRequest
      */
     public function getMethod()
     {
-        return $this->_m;
+        return $this->m;
     }
     /**
      * Returns the httpRequest GET infos
@@ -49,7 +49,7 @@ class HttpRequest
      */
     public function getGet()
     {
-        return $this->_g;
+        return $this->g;
     }
     /**
      * Returns the httpRequest POST infos
@@ -57,7 +57,7 @@ class HttpRequest
      */
     public function getPost()
     {
-        return $this->_p;
+        return $this->p;
     }
     /**
      * Returns the httpRequest POST and GET infos
@@ -65,7 +65,7 @@ class HttpRequest
      */
     public function request()
     {
-       return $this->_r ;
+        return $this->r ;
     }
     /**
      * Returns the httpRequest language
@@ -73,7 +73,7 @@ class HttpRequest
      */
     public function getLanguage()
     {
-        return $this->_l;
+        return $this->l;
     }
     /**
      * Returns the httpRequest query string
@@ -81,7 +81,7 @@ class HttpRequest
      */
     public function getQuery()
     {
-        return $this->_q;
+        return $this->q;
     }
     /**
      * Returns the httpRequest script name
@@ -89,7 +89,7 @@ class HttpRequest
      */
     public function getScriptName()
     {
-        return $this->_s;
+        return $this->s;
     }
     /**
      * Returns the httpRequest Uri
@@ -97,7 +97,7 @@ class HttpRequest
      */
     public function getRequestUri()
     {
-        return $this->_ru;
+        return $this->ru;
     }
     /**
      * Returns the httpRequest relative uri
@@ -105,6 +105,6 @@ class HttpRequest
      */
     public function getRelativeRequestUri()
     {
-        return $this->rel_uri;
+        return $this->reluri;
     }
 }

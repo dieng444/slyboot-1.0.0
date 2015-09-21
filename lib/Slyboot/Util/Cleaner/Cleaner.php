@@ -1,11 +1,11 @@
 <?php
 namespace Slyboot\Util\Cleaner;
+
 /**
- * Class Cleaner : gestionnaire des nettoyeurs
- * permettant d'ajouter des nettoyeurs.
- * @author Elhadj Macky Dieng
- * @copyright	M1DNR2I - 2015
- * @license : Académique
+ * Class Cleaner : Cleaner manager, allows to add cleaner
+ * @author Macky Dieng
+ * @license MIT - http://opensource.org/licenses/MIT
+ * @copyright 2015 the author
  */
 class Cleaner
 {
@@ -21,7 +21,7 @@ class Cleaner
      * @param array $data : données à nettoyer
      * @return array
      */
-    public function addCleaner($cleaners,$data)
+    public function addCleaner($cleaners, $data)
     {
         $this->cleanerContainer = $cleaners;
         /**
@@ -29,8 +29,7 @@ class Cleaner
          * méthode cleaneup qui effectue le nettoyage en question.
          */
         foreach ($this->cleanerContainer as $cleaner) {
-
-            $cleaner::cleanup(array(),$data);
+            $cleaner::cleanup($data, array());
         }
         return $data;
     }

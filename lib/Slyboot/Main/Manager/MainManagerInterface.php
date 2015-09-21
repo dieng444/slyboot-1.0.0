@@ -22,4 +22,3 @@ interface MainManagerInterface
     public function remove(MainEntity $entity);
     public function lastInserId();
 }
-

@@ -17,11 +17,12 @@ class PasswordSecurityAgent implements PasswordSecurityAgentInterface
      */
     public static function secure($password)
     {
-        $hashedPasswod  = password_hash($password, PASSWORD_BCRYPT, array('cost' => 10 ));
-        if($hashedPasswod){
+        $hashedPasswod  = \password_hash($password, PASSWORD_BCRYPT, array('cost' => 10 ));
+        if ($hashedPasswod) {
             return $hashedPasswod;
-        }else
-            echo "Password Hash Exception : An error are occurred during password hashed";
+        } else {
+            throw new \Exception("An error are occurred during password hashed");
+        }
     }
     /**
      * Veirify whether the password submitted by the user
@@ -32,7 +33,7 @@ class PasswordSecurityAgent implements PasswordSecurityAgentInterface
      */
     public static function verify($password, $hash)
     {
-        return password_verify($password, $hash);
+        return \password_verify($password, $hash);
     }
     /**
      * Return hashed password informations
@@ -41,11 +42,11 @@ class PasswordSecurityAgent implements PasswordSecurityAgentInterface
      */
     public static function getHashedPasswordInfo($hash)
     {
-        $passwordinfo = password_get_info($hash);
+        $passwordinfo = \password_get_info($hash);
         if ($passwordinfo) {
             return $passwordinfo;
-        }else
-            echo "Password getInfo Exception : An error
-                 are occurred during geting password infos. It's seem like something wrong";
+        } else {
+            throw new \Exception("Erroroccurred during geting password infos. It's seem like something wrong");
+        }
     }
 }

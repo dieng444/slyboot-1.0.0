@@ -1,0 +1,72 @@
+@CHARSET "UTF-8";
+/* line 5, ../../../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, u, i, center,
+dl, dt, dd, ul,ol,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+} 
+body {
+    font-family: courier, sans-serif;
+}
+#header {
+    background-color: #009fe3;
+    height:300px;
+    width:100%;
+}
+#header .content{
+    width:960px;
+    margin:auto;
+    background : url('../images/slyboot-welcome-v1.png') no-repeat scroll 0 0 / 100% auto rgba(0, 0, 0, 0);
+    height:300px;
+}
+#b-body {
+    width:960px;
+    margin:auto;
+}
+#b-body a{
+    -moz-user-select: none;
+    background: none repeat scroll 0 0 padding-box transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font: 700 1em/1.334 Arial,sans-serif;
+    cursor: pointer;
+    display:block;
+    //margin: 5px 0;
+    outline: 0 none;
+    //padding: 6px 12px 7px;
+    padding-top:15px;
+    padding-bottom:15px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    width:300px;
+    margin:auto;
+    margin-top:45px;
+    background-color: #FAA732;
+    background-image: linear-gradient(to bottom, #FBB450, #F89406);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+}
+#b-body p{
+    //width:700px;
+    margin:auto;
+    margin-top:15px;
+    line-height: 1.5;
+    text-align: center;
+    font-size: 0.8em;
+}

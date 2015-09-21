@@ -2,6 +2,7 @@
 namespace Slyboot\Router;
 
 use Slyboot\Router\Route;
+
 /**
  * Class RouterCollection : Allows to add route
  * on the route collection
@@ -16,13 +17,6 @@ class RouteCollection
      * @var array
      */
     private $routes = array();
-    /**
-     * Class constructor
-     */
-    public function __construct()
-    {
-
-    }
     /**
      * Allows to add route
      * @param  Route $route : the route to add

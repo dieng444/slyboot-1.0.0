@@ -124,7 +124,7 @@ class Request
         if(array_key_exists($key,$this->request)) {
             return $this->request[$key];
         }else{
-            throw new \Exception("Index \"{$key}\"
+            throw new Exception("Index \"{$key}\"
             passed to method getParam() does not exist");
         }
     }
@@ -147,5 +147,19 @@ class Request
         else
             return false;
 
+    }
+    /**
+     * Verify either the request type is an XmlHttpRequest
+     * like ajax request for example.
+     * @return boolean
+     */
+    public function isXhr()
+    {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+                strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

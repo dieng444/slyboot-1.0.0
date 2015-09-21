@@ -3,11 +3,12 @@
 namespace Slyboot\Util\Encoder;
 
 use Slyboot\Util\Encoder\EncoderInterface;
+
 /**
  * Class HtmlEncoder : Encodeur HTML
  * permettant d'encoder les entités html
  * @author Elhadj Macky Dieng
- * @copyright	M1DNR2I - 2015
+ * @copyright   M1DNR2I - 2015
  * @license : Académique
  */
 class HtmlEncoder implements EncoderInterface
@@ -19,7 +20,7 @@ class HtmlEncoder implements EncoderInterface
      */
     public static function encode($data)
     {
-        $clearValue = htmlspecialchars($data,ENT_COMPAT|ENT_HTML5,'UTF-8');
+        $clearValue = htmlspecialchars($data, ENT_COMPAT|ENT_HTML5, 'UTF-8');
         return $clearValue;
     }
 }

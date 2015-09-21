@@ -9,5 +9,5 @@ namespace Slyboot\Main\Entity;
  */
 interface MainEntityInterface
 {
-    public function initialize($data=array());
+    public function initialize($data = array());
 }

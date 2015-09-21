@@ -16,7 +16,7 @@ use Slyboot\Logging\Auth\AuthManager;
  * @license MIT - http://opensource.org/licenses/MIT
  * @copyright 2015 the author
  */
-Abstract class Controller implements ControllerInterface
+abstract class Controller implements ControllerInterface
 {
     /**
      * Request object variable
@@ -59,14 +59,14 @@ Abstract class Controller implements ControllerInterface
         header("Location: ".$url);
     }
     /**
-	 * Allows sub controller to render template
-	 * @param string $view template to render
-	 * @param mixed $context data or other thing
-	 * to display in the template
-	 * @return Slyboot\Templater\TwigTemplateRender
-	 */
-    public function render($name, array $context)
-	{
-		return TwigTemplateRender::render($name, $context);
-	}
+     * Allows sub controller to render template
+     * @param string $view template to render
+     * @param mixed $context data or other thing
+     * to display in the template
+     * @return Slyboot\Templater\TwigTemplateRender
+     */
+    public function display($name, array $context)
+    {
+        return TwigTemplateRender::render($name, $context);
+    }
 }

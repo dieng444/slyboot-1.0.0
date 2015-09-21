@@ -62,16 +62,17 @@ class Route
         $this->fullControllerDefinition = $controller['controller'];
         if ($fullPath==='/') {
             $this->path = $fullPath;
-        }else{
-            $pathParts = explode('/',$fullPath);
+        } else {
+            $pathParts = explode('/', $fullPath);
             foreach ($pathParts as $part) {
-                if(strstr($part,':')) {
-                    $this->queryString[] = str_replace(':','',$part);
-                }else
+                if (strstr($part, ':')) {
+                    $this->queryString[] = str_replace(':', '', $part);
+                } else {
                     $this->path .= $part.'/';
+                }
             }
         }
-        list($vendor, $pack, $act) = explode('::',$controller['controller']);
+        list($vendor, $pack, $act) = explode('::', $controller['controller']);
         $this->vendor = ucfirst($vendor);
         $this->package = ucfirst($pack);
         $this->action = strtolower($act);

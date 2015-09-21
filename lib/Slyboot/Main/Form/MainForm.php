@@ -5,7 +5,7 @@ use Slyboot\Main\Form\MainFormInterface;
 use Slyboot\Util\Validator\FieldLengthValidator;
 use Slyboot\Util\Validator\SelectListValidator;
 use Slyboot\Util\Validator\EmptyFieldValidator;
-use Slyboot\Request\httpequest;
+use Slyboot\Request\HttpRequest;
 use Slyboot\Request\Request;
 use \Exception;
 
@@ -34,8 +34,8 @@ abstract class MainForm implements MainFormInterface
      */
     private $errors;
     /**
-     * httpequest object variable
-     * @var Slyboot\Request\httpequest
+     * HttpRequest object variable
+     * @var Slyboot\Request\HttpRequest
      */
     private $http;
     /**
@@ -52,7 +52,7 @@ abstract class MainForm implements MainFormInterface
     {
         $this->is_empty_error_mode = false;
         $this->is_invalid_data_error_mode = false;
-        $this->http = new httpequest();
+        $this->http = new HttpRequest();
         $this->request = new Request();
     }
     /**
@@ -78,43 +78,45 @@ abstract class MainForm implements MainFormInterface
             /**
              * Empty field validation case
              */
-            if (in_array('EmptyFieldValidator',$validatorsToUse)) {
-                $empty_error_result = EmptyFieldValidator::validate(array(), static::getFormEntity());
+            if (in_array('EmptyFieldValidator', $validatorsToUse)) {
+                $empty_error_result = EmptyFieldValidator::validate(static::getFormEntity(), array());
                 if ($empty_error_result!==true) {
                     $this->is_empty_error_mode = true;
                     $is_data_valid = false;
                     $this->errors = $empty_error_result;
-                } else
+                } else {
                     $this->is_empty_error_mode = false;
+                }
             }
             /**
              * Verify if validator were specified by the developper
              * before adding them
              */
-            if (in_array('FieldLengthValidator',$validatorsToUse)) {
+            if (in_array('FieldLengthValidator', $validatorsToUse)) {
                 $validators[] = new FieldLengthValidator;
             }
-            if (in_array('SelectListValidator',$validatorsToUse)) {
+            if (in_array('SelectListValidator', $validatorsToUse)) {
                 $validators[] = new SelectListValidator;
             }
             /**
              * Invalid data validation case
              */
             if (!$this->is_empty_error_mode) {
-                 $validate_error_result = static::validate($validators,static::getFormEntity());
-                 foreach ($validate_error_result as $value) {
-                     if ($value!==true) {
-                         $this->is_invalid_data_error_mode = true;
-                         $is_data_valid = false;
-                         foreach ($value as $key => $val) {
-                             $this->errors[$key] = $val;
-                         }
-                     }
-                 }
+                 $validate_error_result = static::validate(static::getFormEntity(), $validators);
+                foreach ($validate_error_result as $value) {
+                    if ($value!==true) {
+                        $this->is_invalid_data_error_mode = true;
+                        $is_data_valid = false;
+                        foreach ($value as $key => $val) {
+                            $this->errors[$key] = $val;
+                        }
+                    }
+                }
             }
             return $is_data_valid;
-        }else
+        } else {
             return $is_data_valid;
+        }
 
     }
     /**
@@ -126,14 +128,15 @@ abstract class MainForm implements MainFormInterface
      */
     public function getError($field)
     {
-        if($this->is_empty_error_mode){
-            if (array_key_exists($field,$this->errors))
+        if ($this->is_empty_error_mode) {
+            if (array_key_exists($field, $this->errors)) {
                 return $this->errors[$field];
-        }elseif ($this->is_invalid_data_error_mode)
-            if (array_key_exists($field,$this->errors)) {
-                return $this->errors[$field];
+            }
+        } elseif ($this->is_invalid_data_error_mode)
+        if (array_key_exists($field, $this->errors)) {
+            return $this->errors[$field];
         }
-     }
+    }
     /**
      * Returns the data entered by the user in the form
      * in case of error during submission.
@@ -141,7 +144,7 @@ abstract class MainForm implements MainFormInterface
      */
     public function getPost($postFieldName)
     {
-        if ($this->http->getPost() !==null ) {
+        if ($this->http->getPost() !==null) {
             return $this->request->getParam($postFieldName);
         }
     }

@@ -3,6 +3,7 @@
 
 use Front\AppConfigLoader;
 use Slyboot\Request\HttpRequest;
+use Exception;
  /**
   * Class Dispatcher : Match request to route,
   * and manage for know which action to execute
@@ -15,12 +16,11 @@ use Slyboot\Request\HttpRequest;
      /**
       * Manage route and request for know which
       * action to execute
-      * @throws \Exception
+      * @throws Exception
       * @return mixed
       */
      public function dispatch()
      {
-         //var_dump($_SERVER['REQUEST_URI']);die;
          $config = AppConfigLoader::loadConfigurations();
         /************************************************
          * I use foreach here because in the future,    *
@@ -30,35 +30,41 @@ use Slyboot\Request\HttpRequest;
         foreach ($config['routingFiles'] as $file) {
             if(is_readable($file)) {
                 require $file;
-            }
+            } else
+                throw new Exception("Impossible to read routing file, check the app/Front/AppConfigLoader
+                        file and be sure that the routing file is specified correctly");
         }
-        /**********Initializing of all the algorithme variable**********/
+        /**********Initializing of all the algorithme variables**********/
         $collections = $router->getRouteCollections();
         $http = new HttpRequest();
-        $uri = str_replace(dirname($http->getScriptName()),'',$http->getRequestUri());
-        $script = dirname(dirname($http->getScriptName()));
-        $relativeUri = str_replace($script,'',$http->getRelativeRequestUri());
-        $main_rel_uri = $http->getRelativeRequestUri();
+        $uri = $http->getRequestUri();
+        $relativeUri = $http->getRelativeRequestUri();
+        $script = dirname($http->getScriptName());
         $isRouteMatch = false;
         $isActionParamaterError = false;
         /*************Default route case***********/
-        //var_dump($script);
-        //var_dump($main_rel_uri);die;
-        if($main_rel_uri==$script) {
+        if($uri===$script) {
             $route = $router->getDefaultRoute();
-            $controllerClass = $route->getVendor().'\\'.
-                    $route->getPackage().
-                    '\\Controller'.'\\'.
-                    $route->getPackage().
-                    'Controller';
-            $controller  = new $controllerClass();
-            $action = $route->getAction().'Action';
-            if(method_exists($controller,$action)) {
-                return $controller->$action();
-            }else
-                 echo "Unknow method exception[] Method {$action}
-                       does'nt exist in class {$controllerClass} . May be controller defintion
-                       is wrong in the routing file";
+            if ($route!==null) {
+                $controllerClass = $route->getVendor().'\\'.
+                        $route->getPackage().
+                        '\\Controller'.'\\'.
+                        $route->getPackage().
+                        'Controller';
+                $controller  = new $controllerClass();
+                $action = $route->getAction().'Action';
+                if(method_exists($controller,$action)) {
+                    return $controller->$action();
+                }else
+                    throw new Exception( "Unknow method exception[] Method {$action}
+                does'nt exist in class {$controllerClass} . May be controller definition
+                is wrong in the routing file");
+            } else {
+                throw new Exception("Defaut route exception :
+                        You most specify the default route in the routing file"
+                );
+            }
+
         }
         /************Any route case*****************/
         if(sizeof($collections) > 0){
@@ -75,22 +81,22 @@ use Slyboot\Request\HttpRequest;
                         $controllerParts = explode('::',$route->getFullControllerDefinition());
                         if((sizeof($controllerParts)!==3) ||
                                substr_count($route->getFullControllerDefinition(),'::')!==2) {
-                           echo "Wrong route controller definition,
+                           throw new Exception( "Wrong route controller definition,
                                 check the definition in the routing file
                                 that must be type like AppliName::PackageName::ActionName
-                                E.g MyJournal::Article::show";
-                           return;
+                                E.g MyJournal::Article::show");
+                           die;
                         }
                         /*******The "/" position*********/
                         $pos = (strlen($route->getPath()) - 1);
                         $fullPathPos = (strlen($route->getFullPath()) - 1);
                         /***********************************************************************
                          * Tel user to remove the last "/" in the route path, when he specify  *
-                         * it by error or other thing.                                        *
+                         * it by error or other thing.                                         *
                          **********************************************************************/
                         if(substr($route->getFullPath(), $fullPathPos, 1)===$script){
-                            echo "Error 404 remove the last \"/\" behind the route path
-                            in the routing file".'<br>'; die;
+                            throw new Exception( "Error 404 remove the last \"/\" behind the route path
+                            in the routing file".'<br>'); die;
                         }
                         /**********Case route with parameters***********/
                         if(sizeof($route->getQueryString()) > 0){
@@ -100,7 +106,7 @@ use Slyboot\Request\HttpRequest;
                         * Else 404 Error is trigged.                       *
                         ****************************************************/
                            if(substr($uri, $pos, 1)!==$script){
-                               echo "Error 404 (character after matched path error)".'<br>'; die;
+                               throw new Exception("Error 404 : Check the character after current route"); die;
                            }else{
                                $uriQueryString = substr($uri, $pos);
                                $tabUriQueryString = explode($script,$uriQueryString);
@@ -121,7 +127,7 @@ use Slyboot\Request\HttpRequest;
                                if(sizeof($route->getQueryString())===
                                    sizeof($tabUriQueryStringClean)){
                                    if(substr($uri, (strlen($uri) - 1 ), 1)===$script){
-                                       echo "Error 404 (character after limit of parameters error)".'<br>'; die;
+                                       throw new Exception("Error 404 : Check the character after current route"); die;
                                    }else{
                                        $controllerClass = $route->getVendor().'\\'.
                                                           $route->getPackage().
@@ -142,7 +148,7 @@ use Slyboot\Request\HttpRequest;
                                                 return $controller->$action();
                                            }
                                            if(sizeof($route->getQueryString())!==(sizeof($parameters))){
-                                               echo "Missed parameters, count of parameters not corresponding";die;
+                                               throw new Exception( "Missed parameters, count of parameters not corresponding") ;die;
                                            }else{
                                                /**
                                                 * Here, developper specify parameter
@@ -154,7 +160,7 @@ use Slyboot\Request\HttpRequest;
                                                foreach ($route->getQueryString() as $k => $v) {
                                                    if($route->getQueryString()[$k]!==$tabParams[$k]){
                                                        $isActionParamaterError = true;
-                                                       echo "Param {$v} does not a parameter of
+                                                       throw new Exception ( "Param {$v} does not a parameter of
                                                              method {$action} in class get Controller or
                                                              The order of passed arguments is not respected.
                                                              It important to respected the order in which\n
@@ -164,8 +170,8 @@ use Slyboot\Request\HttpRequest;
                                                               name in the route is the same with\n
                                                              the the one passed to the controller's action.\n
                                                              Because that is mandatory\n
-                                                             they must be same".'<br>';
-                                                       return;
+                                                             they must be same");
+                                                       die;
                                                    }
                                                }
                                                if(!$isActionParamaterError){
@@ -173,13 +179,13 @@ use Slyboot\Request\HttpRequest;
                                                }
                                            }
                                        }else
-                                           echo "Unknow method exception[] Method {$action}
-                                           does'nt exist in class {$controllerClass} . May be controller defintion
-                                           is wrong in the routing file. Learn more about route definition here
-                                           www.slyboot.com/book/routing";
+                                           throw new Exception("Unknow method exception[] : Method {$action}
+                                           does'nt exist in class {$controllerClass} . May be controller definition
+                                           is wrong in the routing file. Check the routing file and be sure that is not the case");
                                   }
                                }else
-                                   echo "Error 404 (count of parameters error)".'<br>'; die;
+                                   throw new Exception("Error 404 : the number of parameters in the routing file most
+                                                       be same in the uri") ; die;
                           }
                         /*******************************************************
                          * << Case route without parameters >>                 *
@@ -189,10 +195,8 @@ use Slyboot\Request\HttpRequest;
                          * the full path here ( $match[0] = $uri ).            *
                          *******************************************************/
                         }elseif(empty($route->getQueryString())){
-                            //var_dump($pos);
-                            //var_dump(strlen($uri));die;
                            if(strlen($uri)!==$pos){
-                               echo "Error 404  (does'nt have parameters error)".'<br>'; die;
+                               throw new Exception("Error 404 : the current route does'nt have an parameter") ; die;
                            }else{
                                $controllerClass = $route->getVendor().'\\'.
                                                   $route->getPackage().
@@ -203,20 +207,21 @@ use Slyboot\Request\HttpRequest;
                                $action = $route->getAction().'Action';
                                if(method_exists($controller,$action)) {
                                    return $controller->$action();
-                               }else
-                                   echo "Unknow method exception[] Method {$action}
+                               } else {
+                                   throw new Exception ("Unknow method exception[] Method {$action}
                                        does'nt exist in class {$controllerClass} . May be controller defintion
-                                       is wrong in the routing file";
+                                       is wrong in the routing file");
+                               }
                            }
                        }
                     }
                 }
                 /*************No route matched, so 404 error's trigged**********/
                 if (!$isRouteMatch) {
-                    echo "Error 404 (matched error)";die;
+                    throw new Exception("Error 404 : No route matched with the currrent route") ;die;
                 }
              }
         }else
-            throw new \Exception("Aucune route trouvée");
+            throw new Exception("No route was found");
      }
  }

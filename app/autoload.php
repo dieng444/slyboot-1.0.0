@@ -11,55 +11,52 @@ class Autoloader
   /**
    * Class constructor : register all specified Loader
    */
-  public function __construct()
-  {
-      spl_autoload_register(array($this, 'classLoader'));
-      spl_autoload_register(array($this, 'libraryLoader'));
-      spl_autoload_register(array($this, 'appClassLoader'));
-  }
+    public function __construct()
+    {
+        spl_autoload_register(array($this, 'classLoader'));
+        spl_autoload_register(array($this, 'libraryLoader'));
+        spl_autoload_register(array($this, 'appClassLoader'));
+    }
   /**
    * Manages self loading of packages in the "src" directory
    * @param object $class : Class to load
    * @return void
    */
-  static public function classLoader($class)
-  {
-    $namespace = explode('\\',$class);
-    $path = implode('/',$namespace);
-    $fullpath = SRC_DIR.$path.'.php';
-    if (is_readable($fullpath)) {
-
-        include($fullpath);
+    public static function classLoader($class)
+    {
+        $namespace = explode('\\', $class);
+        $path = implode('/', $namespace);
+        $fullpath = SRC_DIR.$path.'.php';
+        if (is_readable($fullpath)) {
+            include($fullpath);
+        }
     }
-  }
   /**
    * Manages self loading of packages in the "lib" directory
    * @param object $class : Class to load
    * @return void
    */
-    static public function libraryLoader($class)
+    public static function libraryLoader($class)
     {
-      $namespace = explode('\\',$class);
-      $path = implode('/',$namespace);
-      $fullpath = LIB_DIR.$path.'.php';
-      if (is_readable($fullpath)) {
-
+        $namespace = explode('\\', $class);
+        $path = implode('/', $namespace);
+        $fullpath = LIB_DIR.$path.'.php';
+        if (is_readable($fullpath)) {
             include($fullpath);
-      }
-   }
+        }
+    }
    /**
    * Manages self loading of packages in the "app" directory
    * @param object $class : Class to load
    * @return void
    */
-   static public function appClassLoader($class)
-   {
-       $namespace = explode('\\',$class);
-       $path = implode('/',$namespace);
-       $fullpath = APP_DIR.$path.'.php';
-       if (is_readable($fullpath)) {
-
-           include($fullpath);
-       }
-   }
+    public static function appClassLoader($class)
+    {
+        $namespace = explode('\\', $class);
+        $path = implode('/', $namespace);
+        $fullpath = APP_DIR.$path.'.php';
+        if (is_readable($fullpath)) {
+            include($fullpath);
+        }
+    }
 }

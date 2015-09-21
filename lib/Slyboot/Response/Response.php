@@ -31,4 +31,12 @@ class Response
     {
         echo $this->response = $response;
     }
+    /**
+     * Allows to set the returning content type
+     * @param String $content
+     */
+    public function setContentType($content)
+    {
+        return header("Content-Type :".$content);
+    }
 }

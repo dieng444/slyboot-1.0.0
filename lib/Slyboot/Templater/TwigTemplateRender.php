@@ -13,10 +13,10 @@ class TwigTemplateRender implements TemplaterInterface
 {
     /**
      * Render template
-	 * @param string $view template to render
-	 * @param mixed $context data or other thing
-	 * to display in the template
-	 * @return mixed
+     * @param string $view template to render
+     * @param mixed $context data or other thing
+     * to display in the template
+     * @return mixed
      */
     public static function render($name, array $context)
     {
@@ -32,8 +32,8 @@ class TwigTemplateRender implements TemplaterInterface
             $twig = new \Twig_Environment($loader, array('debug' => true));
             $twig->addGlobal('user', AuthManager::getInstance());
             echo $twig->render($templateName, $context);
-        }else{
-            echo "File not read able";die;
+        } else {
+            throw new \Exception("The current file is not readable");die;
         }
     }
 }

@@ -17,42 +17,43 @@ abstract class MainManager implements MainManagerInterface
 {
     /**
      * PDO instance variable
-	 * @var PDO
-	 */
+     * @var PDO
+     */
     private $connexion;
-	/**
-	 * Class constructor, initialize the PDO instance
-	 * variable
-	 */
-	public function __construct()
-	{
-		$this->connexion = DB::getInstance()->getConnexion();
-	}
-	/**
-	 * Returns a specific entity object
-	 * from the id specified as parameter
-	 * @param int object id
-	 * @return MainEntitys\MainEntity
-	 */
+    /**
+     * Class constructor, initialize the PDO instance
+     * variable
+     */
+    public function __construct()
+    {
+        $this->connexion = DB::getInstance()->getConnexion();
+    }
+    /**
+     * Returns a specific entity object
+     * from the id specified as parameter
+     * @param int object id
+     * @return MainEntitys\MainEntity
+     */
     public function find($id)
     {
         $requete = $this->connexion->prepare('SELECT * from '
                         .static::TABLE_NAME.' where id = :id');
-		$requete->bindValue(':id',$id);
-		$requete->execute();
-		$requete->setFetchMode(PDO::FETCH_ASSOC);
-		$data = $requete->fetch();
-		if(sizeof($data) > 0){
-		    $class = static::OBJ_CLASS_NAME;
-		    $entity = new $class($data);
+        $requete->bindValue(':id', $id);
+        $requete->execute();
+        $requete->setFetchMode(PDO::FETCH_ASSOC);
+        $data = $requete->fetch();
+        if (sizeof($data) > 0) {
+            $class = static::OBJ_CLASS_NAME;
+            $entity = new $class($data);
 
-		    return $entity;
-		}else
-		    return false;
+            return $entity;
+        } else {
+            return false;
+        }
     }
     /**
      * Returns a specific entity object
-	 * corresponding to a filter
+     * corresponding to a filter
      * @param mixed $field the filter field name
      * @param mixed $value the filter value
      * @return \MainEntity\MainEntity
@@ -62,17 +63,18 @@ abstract class MainManager implements MainManagerInterface
         $requete = $this->connexion->prepare('SELECT * from '
                         .static::TABLE_NAME.' where '. $field .' = :'.$field);
 
-		$requete->bindValue(':'.$field,$value);
-		$requete->execute();
-		$requete->setFetchMode(PDO::FETCH_ASSOC);
-		$data = $requete->fetch();
-        if($data && sizeof($data) > 0){
-		    $class = static::OBJ_CLASS_NAME;
-		    $entity = new $class($data);
+        $requete->bindValue(':'.$field, $value);
+        $requete->execute();
+        $requete->setFetchMode(PDO::FETCH_ASSOC);
+        $data = $requete->fetch();
+        if ($data && sizeof($data) > 0) {
+            $class = static::OBJ_CLASS_NAME;
+            $entity = new $class($data);
 
-		    return $entity;
-		}else
-		    return false;
+            return $entity;
+        } else {
+            return false;
+        }
     }
     /**
      * Returns many entity object corresponding to a filter
@@ -85,12 +87,12 @@ abstract class MainManager implements MainManagerInterface
         $requete = $this->connexion->prepare('SELECT * from '
                 .static::TABLE_NAME.' where '. $field .' = :'.$field);
 
-        $requete->bindValue(':'.$field,$value);
+        $requete->bindValue(':'.$field, $value);
         $requete->execute();
         $requete->setFetchMode(PDO::FETCH_ASSOC);
         $entity = static::OBJ_CLASS_NAME;
         $data = array();
-        while (($row = $requete->fetch()) !== FALSE) {
+        while (($row = $requete->fetch()) !== false) {
             $data[] = new $entity($row);
         }
 
@@ -107,14 +109,14 @@ abstract class MainManager implements MainManagerInterface
                         order by dateDeCreation desc');
 
         $requete->execute();
-		$requete->setFetchMode(PDO::FETCH_ASSOC);
+        $requete->setFetchMode(PDO::FETCH_ASSOC);
         $entity = static::OBJ_CLASS_NAME;
         $data = array();
-        while (($row = $requete->fetch()) !== FALSE) {
-			$data[] = new $entity($row);
-		}
+        while (($row = $requete->fetch()) !== false) {
+            $data[] = new $entity($row);
+        }
 
-		return $data;
+        return $data;
     }
     /**
      * Returns a limited list of current entity
@@ -131,11 +133,11 @@ abstract class MainManager implements MainManagerInterface
         $requete->setFetchMode(PDO::FETCH_ASSOC);
         $entity = static::OBJ_CLASS_NAME;
         $data = array();
-        while (($row = $requete->fetch()) !== FALSE) {
-			$data[] = new $entity($row);
-		}
+        while (($row = $requete->fetch()) !== false) {
+            $data[] = new $entity($row);
+        }
 
-		return $data;
+        return $data;
     }
     /**
      * Allows to add a new entity in database
@@ -144,25 +146,27 @@ abstract class MainManager implements MainManagerInterface
      */
     public function add(MainEntity $entity)
     {
+              
         $requete = $this->connexion->prepare('INSERT INTO '
                         .static::TABLE_NAME . static::getRequete());
 
-		return static::bind($requete,$entity,'insert');
+        return static::bind($requete, $entity, 'insert');
     }
     /**
-	 * Conrol which action to execute (insert or upadte)
-	 * If the entity to manage is a new entity, then it will
-	 * just inserted in database by creating an new line in the
-	 * current object table. Otherwise, the entity is just updated
-	 * @param $entity entity to insert or update
-	 * @return boolean
-	 */
+     * Conrol which action to execute (insert or upadte)
+     * If the entity to manage is a new entity, then it will
+     * just inserted in database by creating an new line in the
+     * current object table. Otherwise, the entity is just updated
+     * @param $entity entity to insert or update
+     * @return boolean
+     */
     public function save(MainEntity $entity)
     {
         if ($entity->isNew()) {
-			return $this->add($entity);
-		}else
-			return $this->update($entity);
+            return $this->add($entity);
+        } else {
+            return $this->update($entity);
+        }
     }
     /**
      * Allows to update existing entity
@@ -175,7 +179,7 @@ abstract class MainManager implements MainManagerInterface
                 .static::TABLE_NAME . static::getRequete() .
                 'where id=:id');
 
-        static::bind($requete,$entity,'update');
+        static::bind($requete, $entity, 'update');
     }
     /**
      * Allows to delete a existing object
@@ -185,7 +189,7 @@ abstract class MainManager implements MainManagerInterface
     {
         $requete = $this->connexion->prepare('DELETE FROM '
                         .static::TABLE_NAME.' WHERE id = :id');
-        $requete->bindValue(':id',(int)$entity->getId());
+        $requete->bindValue(':id', (int)$entity->getId());
         $requete->execute();
     }
     /**
@@ -198,4 +202,3 @@ abstract class MainManager implements MainManagerInterface
                 .static::TABLE_NAME)->fetchColumn();
     }
 }
-

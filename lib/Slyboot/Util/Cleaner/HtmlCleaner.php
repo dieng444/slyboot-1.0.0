@@ -2,11 +2,12 @@
 namespace Slyboot\Util\Cleaner;
 
 use Slyboot\Util\Cleaner\CleanerInterface;
+
 /**
  * Class HtmlCleaner : nettoyeur HTML
  * permettant de nettoyer les balises html
  * @author Elhadj Macky Dieng
- * @copyright	M1DNR2I - 2015
+ * @copyright   M1DNR2I - 2015
  * @license : Académique
  */
 class HtmlCleaner implements CleanerInterface
@@ -21,16 +22,15 @@ class HtmlCleaner implements CleanerInterface
      * nettoyeurs pourront nettoyer la même variable de données,
      * pour ainsi faire le nettoyage l'un après l'autre.
      */
-    public static function cleanup($cleaners=array(), $data)
+    public static function cleanup($data, $cleaners = array())
     {
         $tabValues = array();
         $data = &$data;
-        foreach ($data as $key => $value ) {
-
-           if ($key=="titre") {
-               $value = strip_tags($value);
-           }
-           $tabValues[$key] = $value;
+        foreach ($data as $key => $value) {
+            if ($key=="titre") {
+                $value = strip_tags($value);
+            }
+            $tabValues[$key] = $value;
         }
         $data = $tabValues;
     }

@@ -1,5 +1,6 @@
 <?php
 namespace Front;
+
 /**
  * Class AppConfigLoader : Allows to Load all the application configuration
  * @author Macky Dieng
@@ -16,7 +17,7 @@ class AppConfigLoader
     {
         $configs = array(
                             'routingFiles' => array ('app/routing.php'),
-                            'userProvider' => "\\your\\namespace\\here" //Specify your proviver class namespace here
+                            'userProvider' => "\\Minijournal\\User\\Entity\\User" //Specify your proviver class namespace here
                         );
 
         return $configs;

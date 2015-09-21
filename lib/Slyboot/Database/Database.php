@@ -40,13 +40,25 @@ class Database
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
         );
         // création d'un objet PDO avec les constantes définies dans la configuration
-        $this->connexion = new PDO(DSN, USER, PASSWD, $options);
+        /*var_dump(DSN);
+        var_dump(USER);
+        var_dump(PASSWD);
+        var_dump(HOST);
+        var_dump(DB_NAME);die;*/
+        if (USER == ' ' || PASSWD == ' ' || HOST==' ' || DB_NAME ==' ') {
+            $this->connexion = null;
+        } else {
+            $this->connexion = new PDO(DSN, USER, PASSWD, $options);
+        }
+
     }
 
     /**
     * désactiver le clonage
     */
-    private function __clone() {}
+    private function __clone()
+    {
+    }
 
     /**
     * Méthode pour accéder à l'UNIQUE instance de la classe.
@@ -56,7 +68,7 @@ class Database
     public static function getInstance()
     {
         if (! (self::$instance instanceof self)) {
-          self::$instance = new self();
+            self::$instance = new self();
         }
         return self::$instance;
     }

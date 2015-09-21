@@ -7,9 +7,9 @@ namespace Slyboot\Util\Security;
  * @license MIT - http://opensource.org/licenses/MIT
  * @copyright 2015 the author
  */
-Interface PasswordSecurityAgentInterface
+interface PasswordSecurityAgentInterface
 {
     public static function secure($password);
-    public static function verify($password,$hash);
+    public static function verify($password, $hash);
     public static function getHashedPasswordInfo($hash);
 }

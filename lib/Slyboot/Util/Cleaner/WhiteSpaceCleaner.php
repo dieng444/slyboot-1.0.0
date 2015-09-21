@@ -2,13 +2,13 @@
 namespace Slyboot\Util\Cleaner;
 
 use Slyboot\Util\Cleaner\CleanerInterface;
+
 /**
- * Class WhiteSpaceCleaner : nettoyeur des espaces
- * de début et de fin de chaînes.
- * @author Elhadj Macky Dieng
- * @copyright	M1DNR2I - 2015
- * @license : Académique
- */
+ * Class WhiteSpaceCleaner : Allows to remove white space in data
+ * @author Macky Dieng
+ * @license MIT - http://opensource.org/licenses/MIT
+ * @copyright 2015 the author
+ **/
 class WhiteSpaceCleaner implements CleanerInterface
 {
     /**
@@ -16,12 +16,11 @@ class WhiteSpaceCleaner implements CleanerInterface
      * au début et à la fin des différents champs.
      * @param array $data : tableau de données à nettoyer
      * */
-    public static function cleanup($cleaners=array(), $data)
+    public static function cleanup($data, $cleaners = array())
     {
         $tabValues = array();
         $data = &$data;
-        foreach ($data as $key => $value ) {
-
+        foreach ($data as $key => $value) {
             $tabValues[$key] = trim($value);
         }
 

@@ -1,11 +1,12 @@
 <?php
 namespace Slyboot\Templater;
+
 /**
  *
  * @author dieng444
  *
  */
-Interface TemplaterInterface
+interface TemplaterInterface
 {
-    public static function render($view,array $data);
+    public static function render($view, array $data);
 }

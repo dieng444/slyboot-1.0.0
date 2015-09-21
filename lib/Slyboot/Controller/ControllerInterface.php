@@ -10,5 +10,5 @@ namespace Slyboot\Controller;
 interface ControllerInterface
 {
     public function redirect($url);
-    public function render($name, array $context);
+    public function display($name, array $context);
 }

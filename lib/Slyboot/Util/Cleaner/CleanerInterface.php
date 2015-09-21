@@ -3,5 +3,5 @@ namespace Slyboot\Util\Cleaner;
 
 interface CleanerInterface
 {
-    public static function cleanup($cleaners=array(), $data);
+    public static function cleanup($data, $cleaners = array());
 }

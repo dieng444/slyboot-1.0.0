@@ -4,6 +4,7 @@ namespace Front;
 use Slyboot\Controller\Controller;
 use Slyboot\Request\Request;
 use Slyboot\Router\Dispatcher;
+
 /**
  * Class FrontController : Call the dispatcher for dispatch an action
  * @author Macky Dieng
@@ -20,7 +21,7 @@ class FrontController extends Controller
      * Call the dispatcher
      * @return void
      */
-    function run()
+    public function run()
     {
         $dispatcher = new Dispatcher();
         $dispatcher->dispatch();

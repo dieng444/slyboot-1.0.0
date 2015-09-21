@@ -2,6 +2,7 @@
 namespace Slyboot\Router;
 
 use Slyboot\Router\RouteCollection;
+
 /**
  * Class Router : Allows to add route collections
  * @author Macky Dieng

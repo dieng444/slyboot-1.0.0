@@ -5,5 +5,5 @@ use Slyboot\Main\Entity\MainEntity;
 
 interface ValidatorInterface
 {
-    public static function validate($validators=array(),MainEntity $entity);
+    public static function validate(MainEntity $entity, $validators = array());
 }

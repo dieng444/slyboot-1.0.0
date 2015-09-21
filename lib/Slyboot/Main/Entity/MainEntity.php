@@ -21,7 +21,7 @@ abstract class MainEntity implements MainEntityInterface
      */
     public function __construct($data)
     {
-       if(!empty($data)){
+        if (!empty($data)) {
             $this->initialize($data);
         }
     }
@@ -31,13 +31,13 @@ abstract class MainEntity implements MainEntityInterface
      * @param array $data array of data
      * @return void
      */
-    public function initialize($data=array())
+    public function initialize($data = array())
     {
-        foreach($data as $attribut => $value){
-        	if(!empty($value)){
-            	$methode = 'set'.ucfirst($attribut);
-                if(method_exists($this,$methode)){
-                	$this->$methode($value);
+        foreach ($data as $attribut => $value) {
+            if (!empty($value)) {
+                $methode = 'set'.ucfirst($attribut);
+                if (method_exists($this, $methode)) {
+                    $this->$methode($value);
                 }
             }
         }
@@ -50,9 +50,10 @@ abstract class MainEntity implements MainEntityInterface
      **/
     public function isNew()
     {
-        if(empty(static::getId())){
+        if (static::getId()=== null) {
             return true;
-        }else
+        } else {
             return false;
+        }
     }
 }
